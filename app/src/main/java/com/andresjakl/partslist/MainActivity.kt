@@ -76,7 +76,6 @@ class MainActivity : AppCompatActivity() {
      * and could be stripped.
      */
     class ClassWithConstructorProperties constructor (var a: Int, var b: Int) {
-
         fun calculate() : Int {
             return a + b;
         }
