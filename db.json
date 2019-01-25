@@ -1,0 +1,20 @@
+{
+  "parts": [
+    {
+      "id": 100411,
+      "itemName": "LED Green 568 nm, 5 mm"
+    },
+    {
+      "id": 101119,
+      "itemName": "Aluminium Capacitor 4.7 μF"
+    },
+    {
+      "id": 101624,
+      "itemName": "Potentiometer 500 kΩ"
+    },
+    {
+      "id": 103532,
+      "itemName": "LED Red, 7 mm"
+    }
+  ]
+}
