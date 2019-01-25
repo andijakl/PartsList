@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">PartsList</string>
+    <string name="part_name">Part Name</string>
+    <string name="update">Update</string>
+    <string name="delete">Delete</string>
+</resources>
