@@ -10,6 +10,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.io.IOException
 
 class MainActivity : AppCompatActivity() {
     private val tag : String = MainActivity::class.java.simpleName
@@ -55,25 +56,31 @@ class MainActivity : AppCompatActivity() {
         // An even better solution would be to use the Android livecycle-aware viewmodel
         // instead of attaching the scope to the activity.
         GlobalScope.launch(Dispatchers.Main) {
-            // Execute web request through coroutine call adapter & retrofit
-            val webResponse = WebAccess.partsApi.getPartsAsync().await()
+            try {
+                // Execute web request through coroutine call adapter & retrofit
+                val webResponse = WebAccess.partsApi.getPartsAsync().await()
 
-            if (webResponse.isSuccessful) {
-                // Get the returned & parsed JSON from the web response.
-                // Type specified explicitly here to make it clear that we already
-                // get parsed contents.
-                val partList : List<PartData>? = webResponse.body()
-                Log.d(tag, partList?.toString())
-                // Assign the list to the recycler view. If partsList is null,
-                // assign an empty list to the adapter.
-                adapter.partItemList = partList ?: listOf()
-                // Inform recycler view that data has changed.
-                // Makes sure the view re-renders itself
-                adapter.notifyDataSetChanged()
-            } else {
-                // Print error information to the console
-                Log.d(tag, "Error ${webResponse.code()}")
-                Toast.makeText(this@MainActivity, "Error ${webResponse.code()}", Toast.LENGTH_SHORT).show()
+                if (webResponse.isSuccessful) {
+                    // Get the returned & parsed JSON from the web response.
+                    // Type specified explicitly here to make it clear that we already
+                    // get parsed contents.
+                    val partList: List<PartData>? = webResponse.body()
+                    Log.d(tag, partList?.toString())
+                    // Assign the list to the recycler view. If partsList is null,
+                    // assign an empty list to the adapter.
+                    adapter.partItemList = partList ?: listOf()
+                    // Inform recycler view that data has changed.
+                    // Makes sure the view re-renders itself
+                    adapter.notifyDataSetChanged()
+                } else {
+                    // Print error information to the console
+                    Log.e(tag, "Error ${webResponse.code()}")
+                    Toast.makeText(this@MainActivity, "Error ${webResponse.code()}", Toast.LENGTH_LONG).show()
+                }
+            } catch (e: IOException) {
+                // Error with network request
+                Log.e(tag, "Exception " + e.printStackTrace())
+                Toast.makeText(this@MainActivity, "Exception ${e.message}", Toast.LENGTH_LONG).show()
             }
         }
     }

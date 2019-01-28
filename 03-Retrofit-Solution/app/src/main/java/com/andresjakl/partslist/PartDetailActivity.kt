@@ -8,6 +8,7 @@ import kotlinx.android.synthetic.main.activity_part_detail.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.io.IOException
 
 class PartDetailActivity : AppCompatActivity() {
     private val tag : String = PartDetailActivity::class.java.simpleName
@@ -44,17 +45,29 @@ class PartDetailActivity : AppCompatActivity() {
 
     private fun deletePart(itemId : Long) {
         GlobalScope.launch(Dispatchers.Main) {
-            val webResponse = WebAccess.partsApi.deletePartAsync(itemId).await()
-            Log.d(tag, "Delete success: ${webResponse.isSuccessful}")
-            Toast.makeText(applicationContext, "Deleted: $itemId: ${webResponse.isSuccessful}", Toast.LENGTH_LONG).show()
+            try {
+                val webResponse = WebAccess.partsApi.deletePartAsync(itemId).await()
+                Log.e(tag, "Delete success: ${webResponse.isSuccessful}")
+                Toast.makeText(applicationContext, "Deleted: $itemId: ${webResponse.isSuccessful}", Toast.LENGTH_LONG).show()
+            } catch (e: IOException) {
+                // Error with network request
+                Log.e(tag, "Exception " + e.printStackTrace())
+                Toast.makeText(this@PartDetailActivity, "Exception ${e.message}", Toast.LENGTH_LONG).show()
+            }
         }
     }
 
     private fun updatePart(originalItemId: Long, newItem: PartData) {
         GlobalScope.launch(Dispatchers.Main) {
-            val webResponse = WebAccess.partsApi.updatePartAsync(originalItemId, newItem).await()
-            Log.d(tag, "Update success: ${webResponse.isSuccessful}")
-            Toast.makeText(applicationContext, "Updated: $originalItemId: ${webResponse.isSuccessful}", Toast.LENGTH_LONG).show()
+            try {
+                val webResponse = WebAccess.partsApi.updatePartAsync(originalItemId, newItem).await()
+                Log.e(tag, "Update success: ${webResponse.isSuccessful}")
+                Toast.makeText(applicationContext, "Updated: $originalItemId: ${webResponse.isSuccessful}", Toast.LENGTH_LONG).show()
+            } catch (e: IOException) {
+                // Error with network request
+                Log.e(tag, "Exception " + e.printStackTrace())
+                Toast.makeText(this@PartDetailActivity, "Exception ${e.message}", Toast.LENGTH_LONG).show()
+            }
         }
     }
 }
