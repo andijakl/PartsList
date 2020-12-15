@@ -3,15 +3,17 @@ package com.andreasjakl.partslist
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
-import kotlinx.android.synthetic.main.activity_part_detail.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.io.IOException
 import androidx.appcompat.app.AppCompatActivity
+import com.andreasjakl.partslist.databinding.ActivityPartDetailBinding
 
 class PartDetailActivity : AppCompatActivity() {
     private val tag : String = PartDetailActivity::class.java.simpleName
+    private lateinit var binding: ActivityPartDetailBinding
+
     /**
      * Item ID that was supplied to this activity when it was created.
      * Saved as extra instance variable to make sure we keep it, even
@@ -21,24 +23,26 @@ class PartDetailActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_part_detail)
+        binding = ActivityPartDetailBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
 
         // Save the original item ID
         originalItemId = intent.getLongExtra("ItemId", 0)
         // Parse the parameters out of the intent and assign the values
         // to the UI elements.
-        tv_item_id.text = originalItemId.toString()
-        et_item_name.setText(intent.getStringExtra("ItemName"))
+        binding.tvItemId.text = originalItemId.toString()
+        binding.etItemName.setText(intent.getStringExtra("ItemName"))
 
         // Set click listeners for the button to delete this element
-        bt_delete.setOnClickListener {
+        binding.btDelete.setOnClickListener {
             deletePart(originalItemId)
         }
 
         // Set click listeners for the button to update this element
-        bt_update.setOnClickListener {
+        binding.btUpdate.setOnClickListener {
             updatePart(originalItemId,
-                    PartData(originalItemId, et_item_name.text.toString()))
+                    PartData(originalItemId, binding.etItemName.text.toString()))
         }
     }
 

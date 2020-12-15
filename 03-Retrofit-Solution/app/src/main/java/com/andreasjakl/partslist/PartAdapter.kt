@@ -1,11 +1,11 @@
 package com.andreasjakl.partslist
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.NonNull
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.part_list_item.view.*
+import com.andreasjakl.partslist.databinding.PartListItemBinding
 
-class PartAdapter (var partItemList: List<PartData>, val clickListener: (PartData) -> Unit) :
+class PartAdapter (var partItemList: List<PartData>, private val clickListener: (PartData) -> Unit) :
         RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -14,8 +14,9 @@ class PartAdapter (var partItemList: List<PartData>, val clickListener: (PartDat
         // Use context from main app -> also supplies theme layout values!
         val inflater = LayoutInflater.from(parent.context)
         // Inflate XML. Last parameter: don't immediately attach new view to the parent view group
-        val view = inflater.inflate(R.layout.part_list_item, parent, false)
-        return PartViewHolder(view)
+        val binding = PartListItemBinding.inflate(inflater, parent, false)
+        //val view = inflater.inflate(R.layout.part_list_item, parent, false)
+        return PartViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -26,11 +27,11 @@ class PartAdapter (var partItemList: List<PartData>, val clickListener: (PartDat
 
     override fun getItemCount() = partItemList.size
 
-    class PartViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class PartViewHolder(private val binding: PartListItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(part: PartData, clickListener: (PartData) -> Unit) {
-            itemView.tv_part_item_name.text = part.itemName
-            itemView.tv_part_id.text = part.id.toString()
-            itemView.setOnClickListener { clickListener(part)}
+            binding.tvPartItemName.text = part.itemName
+            binding.tvPartId.text = part.id.toString()
+            binding.root.setOnClickListener { clickListener(part) }
         }
     }
 }
