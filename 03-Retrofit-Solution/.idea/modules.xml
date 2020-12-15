@@ -3,7 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/03-Retrofit-Solution.iml" filepath="$PROJECT_DIR$/03-Retrofit-Solution.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/03-Retrofit-Solution.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/03-Retrofit-Solution.app.iml" />
     </modules>
   </component>
 </project>
