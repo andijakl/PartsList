@@ -6,13 +6,16 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import android.util.Log
 import android.widget.Toast
-import kotlinx.android.synthetic.main.activity_main.*
+import com.andreasjakl.partslist.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
 
         /*
          * A LinearLayoutManager is responsible for measuring and positioning item views within a
@@ -25,19 +28,23 @@ class MainActivity : AppCompatActivity() {
          * There are other LayoutManagers available to display your data in uniform grids,
          * staggered grids, and more! See the developer documentation for more details.
          */
-        rv_parts.layoutManager = LinearLayoutManager(this)
+        binding.rvParts.layoutManager = LinearLayoutManager(this)
         /*
          * Use this setting to improve performance if you know that changes in content do not
          * change the child layout size in the RecyclerView
          */
-        rv_parts.setHasFixedSize(true)
+        binding.rvParts.setHasFixedSize(true)
         val testData = createTestData()
         //rv_parts.adapter = PartAdapter(testData)
 
         // Create the PartAdapter
         // 1st parameter: our generated testData
         // 2nd parameter: item click handler function (implemented below) as function parameter
-        rv_parts.adapter = PartAdapter(testData, { partItem : PartData -> partItemClicked(partItem) })
+        binding.rvParts.adapter = PartAdapter(testData) { partItem: PartData ->
+            partItemClicked(
+                partItem
+            )
+        }
 
 
         // ---------------------------------------------------------
@@ -49,7 +56,7 @@ class MainActivity : AppCompatActivity() {
         Log.d("Tests", "Calculation result: " + calcTest.calculate())
 
         // Call a function, supplying a lambda to the function parameter
-        testFunctionParameters( {a : Int, b : Int -> a + b } )
+        testFunctionParameters { a: Int, b: Int -> a + b }
     }
 
     private fun partItemClicked(partItem : PartData) {
@@ -75,9 +82,9 @@ class MainActivity : AppCompatActivity() {
      * as properties in the class. Note that the keyword "constructor" is optional
      * and could be stripped.
      */
-    class ClassWithConstructorProperties constructor (var a: Int, var b: Int) {
+    class ClassWithConstructorProperties constructor (private var a: Int, private var b: Int) {
         fun calculate() : Int {
-            return a + b;
+            return a + b
         }
     }
 

@@ -3,19 +3,22 @@ package com.andreasjakl.partslist
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import kotlinx.android.synthetic.main.activity_part_detail.*
+import com.andreasjakl.partslist.databinding.ActivityPartDetailBinding
 
 class PartDetailActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityPartDetailBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_part_detail)
+        binding = ActivityPartDetailBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
 
-        var intentThatStartedThisActivity = getIntent()
+        val intentThatStartedThisActivity = intent
 
         if (intentThatStartedThisActivity.hasExtra(Intent.EXTRA_TEXT)) {
-            var partId = intentThatStartedThisActivity.getStringExtra(Intent.EXTRA_TEXT)
-            tv_item_id.text = partId
+            val partId = intentThatStartedThisActivity.getStringExtra(Intent.EXTRA_TEXT)
+            binding.tvItemId.text = partId
         }
     }
 }
