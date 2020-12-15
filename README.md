@@ -17,6 +17,11 @@ Finished source code for the blog article introducing RecyclerView with Kotlin s
  1. Install Node.js
  2. Install the json-server module globally: `npm install -g json-server`
  3. Run the server from the root directory of this repository, which contains the sample database (db.json): `json-server --watch db.json`. Note: to access the web server from your phone instead of the emulator, run it with your computer's local IP address, e.g.: `json-server --watch db.json --host <yourIp>`
+ 
+ 
+## Updates
+
+*December 15th, 2020:* Updated project to use (https://developer.android.com/topic/libraries/view-binding/migration)[Jetpack View Binding instead of the Kotlin synthetics].
 
 ## Related Information
 
