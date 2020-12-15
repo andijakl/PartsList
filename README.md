@@ -21,7 +21,7 @@ Finished source code for the blog article introducing RecyclerView with Kotlin s
  
 ## Updates
 
-*December 15th, 2020:* Updated project to use (https://developer.android.com/topic/libraries/view-binding/migration)[Jetpack View Binding instead of the Kotlin synthetics].
+*December 15th, 2020:* Updated project to use [Jetpack View Binding instead of the Kotlin synthetics](https://developer.android.com/topic/libraries/view-binding/migration).
 
 ## Related Information
 
