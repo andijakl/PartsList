@@ -1,7 +1,6 @@
 package com.andreasjakl.partslist
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.annotation.NonNull
 import androidx.recyclerview.widget.RecyclerView
 import com.andreasjakl.partslist.databinding.PartListItemBinding
 
@@ -15,7 +14,6 @@ class PartAdapter (var partItemList: List<PartData>, private val clickListener: 
         val inflater = LayoutInflater.from(parent.context)
         // Inflate XML. Last parameter: don't immediately attach new view to the parent view group
         val binding = PartListItemBinding.inflate(inflater, parent, false)
-        //val view = inflater.inflate(R.layout.part_list_item, parent, false)
         return PartViewHolder(binding)
     }
 

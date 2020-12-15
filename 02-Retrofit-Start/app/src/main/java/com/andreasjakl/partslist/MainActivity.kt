@@ -5,16 +5,19 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import android.widget.Toast
-import kotlinx.android.synthetic.main.activity_main.*
+import com.andreasjakl.partslist.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     private val tag : String = MainActivity::class.java.simpleName
+    private lateinit var binding: ActivityMainBinding
 
     private lateinit var adapter: PartAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
 
         /*
          * A LinearLayoutManager is responsible for measuring and positioning item views within a
@@ -27,18 +30,18 @@ class MainActivity : AppCompatActivity() {
          * There are other LayoutManagers available to display your data in uniform grids,
          * staggered grids, and more! See the developer documentation for more details.
          */
-        rv_parts.layoutManager = LinearLayoutManager(this)
+        binding.rvParts.layoutManager = LinearLayoutManager(this)
         /*
          * Use this setting to improve performance if you know that changes in content do not
          * change the child layout size in the RecyclerView
          */
-        rv_parts.setHasFixedSize(true)
+        binding.rvParts.setHasFixedSize(true)
 
         // Create the PartAdapter
         // 1st parameter: our generated testData. listOf() generates empty list with correct type
         // 2nd parameter: item click handler function (implemented below) as function parameter
         adapter = PartAdapter(listOf(), { partItem : PartData -> partItemClicked(partItem) })
-        rv_parts.adapter = adapter
+        binding.rvParts.adapter = adapter
 
         loadPartsAndUpdateList()
 
